@@ -7,7 +7,7 @@ so I made a placeholder image site.
 * Web server is cowboy,
 * Caching is handled by nginx.
 
-You can see it running here: http://mollypictures.com
+You can see it running here: http://molly.nathansplace.co.uk
 
 ## Build / run
 
