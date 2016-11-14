@@ -2,6 +2,8 @@
 
 -export([exec/1]).
 
+%% TODO: Stream result out rather than buffering entire thing first
+
 exec(Command) ->
   Port = open_port({spawn, Command}, [stream, in, eof, hide, exit_status]),
   get_data(Port, []).

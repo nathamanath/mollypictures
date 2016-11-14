@@ -1,6 +1,6 @@
 # mollypictures
 
-An OTP application
+Place holder images of Molly the bunny rabbit as a service (PHIoMTBRaaS)
 
 ## Build
 
@@ -12,3 +12,5 @@ An OTP application
 ## TODO:
 
 * html instructions page
+* nginx setup in dockerfile
+* stream converted images
