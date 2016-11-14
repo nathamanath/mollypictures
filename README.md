@@ -12,5 +12,3 @@ Place holder images of Molly the bunny rabbit as a service (PHIoMTBRaaS)
 ## TODO:
 
 * html instructions page
-* nginx setup in dockerfile
-* stream converted images
