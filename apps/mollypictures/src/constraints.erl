@@ -53,5 +53,5 @@ output(Width, Height, Format, Orientation) ->
 get_orientation(Width, Height) when is_list(Width), is_list(Height) ->
   get_orientation(list_to_integer(Width), list_to_integer(Height));
 
-get_orientation(Width, Height) when Width >= Height -> landscape;
+get_orientation(Width, Height) when Width > Height -> landscape;
 get_orientation(_Width, _Height) -> portrait.
