@@ -23,7 +23,9 @@ start(_StartType, _StartArgs) ->
         [{image_spec, fun constraints:image_spec/1}],
         molly_handler,
         []
-      }
+      },
+
+      {"/", cowboy_static, {priv_file, mollypictures, "static/index.html"}}
     ]}
   ]),
 
