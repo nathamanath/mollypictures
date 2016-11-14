@@ -27,7 +27,7 @@ server {
 
 }
 
-proxy_cache_path /tmp/nginx levels=1:2 keys_zone=my_zone:10m inactive=5m;
+proxy_cache_path /tmp/nginx levels=1:2 keys_zone=my_zone:10m inactive=15m;
 proxy_cache_key "$scheme$request_method$host$request_uri";
 
 server {
@@ -44,10 +44,9 @@ server {
     gzip_comp_level 3;
     gzip_types application/x-javascript text/css text/html image/x-icon image/png image/jpeg image/gif;
 
-    expires 5m;
+    expires 15m;
 
     add_header Cache-Control public;
-    add_header X-Proxy-Cache $upstream_cache_status;
 
     proxy_cache my_zone;
     add_header X-Proxy-Cache $upstream_cache_status;
