@@ -27,7 +27,7 @@ init(Req, Opts) ->
 
 handle(Req, State=#state{}) ->
   {ok, Req2} = cowboy_req:reply(200, Req),
-    {ok, Req2, State}.
+  {ok, Req2, State}.
 
 terminate(_Reason, _Req, _State) ->
   ok.
@@ -39,7 +39,6 @@ terminate(_Reason, _Req, _State) ->
 
 %% Path to random molly picture
 random_picture_path(Path) when is_list(Path) ->
-  %% TODO: portrait vs landscape
   Basepath = filename:join([code:priv_dir(mollypictures), "images", Path]),
   {_, Pictures} = file:list_dir(Basepath),
 
@@ -55,9 +54,12 @@ random_picture_path(Orientation) when Orientation =:= landscape ->
 random_picture_path(Orientation) ->
   random_picture_path("portrait").
 
-
+%% Template command for imagemagick
 image_command(Width, Height, Format, Path) ->
-  Dimensions = string:join([Width, "x", Height], ""),
+  W = integer_to_list(Width),
+  H = integer_to_list(Height),
+
+  Dimensions = string:join([W, "x", H], ""),
   Resize = string:join([Dimensions, "^"], ""),
 
   Command = string:join([
