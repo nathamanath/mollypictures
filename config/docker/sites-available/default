@@ -16,8 +16,6 @@ server {
     gzip_comp_level 3;
     gzip_types application/x-javascript text/css text/html image/x-icon image/png image/jpeg image/gif;
 
-    add_header Cache-Control public;
-
     proxy_pass http://app;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -46,9 +44,8 @@ server {
 
     expires 15m;
 
-    add_header Cache-Control public;
-
     proxy_cache my_zone;
+    proxy_cache_bypass  $http_cache_control;
     add_header X-Proxy-Cache $upstream_cache_status;
 
     include proxy_params;

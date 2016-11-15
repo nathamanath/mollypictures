@@ -13,8 +13,8 @@ You can see it running here: http://molly.nathansplace.co.uk
 
 ```sh
   $ rebar3 as prod release
-  $ docker build -t ubuntu/mollypictures .
-  $ docker run -d -p 8080:80 -t ubuntu/mollypictures
+  $ docker build -t mollypictures .
+  $ docker run -d -p 8080:80 -t mollypictures
 ```
 
 Then visit `http://localhost:8080` for usage.
