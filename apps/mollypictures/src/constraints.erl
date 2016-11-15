@@ -13,7 +13,7 @@ image_spec(Value) ->
 
   String = binary_to_list(Value),
 
-  case re:run(String, "^(\\d+)x(\\d+).(png|jpeg)+$") of
+  case re:run(String, "^(\\d+)x(\\d+)\\.(png|jpeg)+$") of
     {match, Matches} ->
 
       Width = list_to_integer(match_text(String, lists:nth(2, Matches))),
