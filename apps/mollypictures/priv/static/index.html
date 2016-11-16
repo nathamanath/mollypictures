@@ -28,14 +28,24 @@
     <p>Where:</p>
 
     <ul>
-      <li>IMAGE_WIDTH is desired image with in pixels (<=1920)</li>
-      <li>IMAGE_HEIGHT is desired image height in pixels (<=1080)</li>
-      <li>FORMAT is either `.jpeg` or `.png` </li>
+      <li>`IMAGE_WIDTH` is desired image with in pixels (<=1920)</li>
+      <li>`IMAGE_HEIGHT` is desired image height in pixels (<=1080)</li>
+      <li>`FORMAT` is one of `.jpg`, `.jpeg`, `.gif` or `.png`</li>
     </ul>
+
+    <p>or grayscale:</p>
+
+    <code>
+      /g/IMAGE_WIDTHxIMAGE_HEIGHT.FORMAT
+    </code>
 
     <p>For example <a href="/200x200.png">/200x200.png</a> gives you this:</p>
 
     <img alt="molly" src="/200x200.png" />
+
+    <p>And <a href="/g/200x200.png">/g/200x200.png</a> gives you this:</p>
+
+    <img alt="molly" src="/g/200x200.png" />
 
     <footer>
       <p>By <a href="http://nathansplace.co.uk" title="nathans place">NathanG</a></p>

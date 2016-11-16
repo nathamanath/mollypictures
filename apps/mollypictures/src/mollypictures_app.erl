@@ -18,12 +18,17 @@ start(_StartType, _StartArgs) ->
 
   Dispatch = cowboy_router:compile([
     { '_', [
+
       {
-        "/:image_spec",
-        [{image_spec, fun constraints:image_spec/1}],
+        "/[:type/]:image_spec",
+        [
+          {type, fun(V) when V =:= <<"g">> -> {true, g}; (_) -> false end},
+          {image_spec, fun constraints:image_spec/1}
+        ],
         molly_handler,
         []
       },
+
 
       {"/", cowboy_static, {priv_file, mollypictures, "static/index.html"}}
     ]}

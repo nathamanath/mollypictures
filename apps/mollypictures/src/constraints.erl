@@ -13,12 +13,12 @@ image_spec(Value) ->
 
   String = binary_to_list(Value),
 
-  case re:run(String, "^(\\d+)x(\\d+)\\.(png|jpeg)+$") of
+  case re:run(String, "^(\\d+)x(\\d+)\\.(png|jpeg|jpg|gif)+$") of
     {match, Matches} ->
 
       Width = list_to_integer(match_text(String, lists:nth(2, Matches))),
       Height = list_to_integer(match_text(String, lists:nth(3, Matches))),
-      Format = match_text(String, lists:nth(4, Matches)),
+      Format = get_format(match_text(String, lists:nth(4, Matches))),
       Orientation = get_orientation(Width, Height),
 
       output(Width, Height, Format, Orientation);
@@ -29,6 +29,11 @@ image_spec(Value) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
+
+get_format(Format) when Format =:= "jpg" ->
+  get_format("jpeg");
+get_format(Format) ->
+  Format.
 
 match_text(String, {From, To}) ->
   lists:sublist(String, From+1, To).
