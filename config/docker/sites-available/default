@@ -10,13 +10,8 @@ server {
   listen 9000;
 
   location / {
-    gzip_static on;
-    gzip_vary on;
-    gzip_disable msie6;
-    gzip_comp_level 6;
-    gzip_types application/x-javascript text/css text/html image/x-icon image/png image/jpeg image/gif;
 
-    expires 4w;
+    expires 30m;
 
     add_header Cache-Control public;
 
@@ -25,6 +20,7 @@ server {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
+
   }
 
 }
