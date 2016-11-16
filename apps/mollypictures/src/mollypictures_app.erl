@@ -29,7 +29,6 @@ start(_StartType, _StartArgs) ->
         []
       },
 
-
       {"/", cowboy_static, {priv_file, mollypictures, "static/index.html"}}
     ]}
   ]),
