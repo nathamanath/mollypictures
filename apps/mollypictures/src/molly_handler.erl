@@ -8,6 +8,12 @@
 
 -record(state, {}).
 
+-define(MAX_WIDTH_MEDUIM, 960).
+-define(MAX_HEIGHT_MEDUIM, 540).
+
+-define(MAX_WIDTH_SMALL, 480).
+-define(MAX_HEIGHT_SMALL, 270).
+
 %%====================================================================
 %% API
 %%====================================================================
@@ -17,8 +23,9 @@ init(Req, Opts) ->
   {Width, Height, Format, Orientation} = cowboy_req:binding(image_spec, Req),
 
   Type = cowboy_req:binding(type, Req, c),
+  Size = source_folder(Width, Height, Orientation),
 
-  Path = random_picture_path(Orientation),
+  Path = random_picture_path(Orientation, Size),
   {_, Image} = command_runner:exec(image_command(Width, Height, Format, Path, Type)),
 
   Req2 = cowboy_req:reply(200,
@@ -43,10 +50,25 @@ type_flag(Type) when Type =:= g ->
   "-normalize -colorspace Gray";
 type_flag(_) -> "".
 
+%% Which size source image do we need
+source_folder(Width, Height, portrait) when Width > ?MAX_HEIGHT_MEDUIM -> large;
+source_folder(Width, Height, portrait) when Height >= ?MAX_HEIGHT_MEDIUM -> large;
+source_folder(Width, Height, landscape) when Width > ?MAX_WIDTH_MEDUIM -> large;
+source_folder(Width, Height, landscape) when Height >= ?MAX_HEUGHT_MEDIUM -> large;
+
+source_folder(Width, Height, portrait) when Width > ?MAX_HEIGHT_SMALL -> medium;
+source_folder(Width, Height, portrait) when Height >= ?MAX_HEIGHT_SMALL -> medium;
+source_folder(Width, Height, landscape) when Width > ?MAX_WIDTH_SMALL -> medium;
+source_folder(Width, Height, landscape) when Height >= ?MAX_HEUGHT_SMALL -> medium;
+
+source_folder(_Width, _Height ,_Orientation) -> small.
 
 %% Path to random molly picture
-random_picture_path(Path) when is_list(Path) ->
-  Basepath = filename:join([code:priv_dir(mollypictures), "images", Path]),
+random_picture_path(Orientation, Size) ->
+  O = atom_to_list(Orientation),
+  S = atom_to_list(Size),
+
+  Basepath = filename:join([code:priv_dir(mollypictures), "images", S, O]),
   {_, Pictures} = file:list_dir(Basepath),
 
   random:seed(erlang:now()),
@@ -55,11 +77,6 @@ random_picture_path(Path) when is_list(Path) ->
   File = lists:nth(Index, Pictures),
 
   filename:join([Basepath, File]);
-
-random_picture_path(Orientation) when Orientation =:= landscape ->
-  random_picture_path("landscape");
-random_picture_path(Orientation) ->
-  random_picture_path("portrait").
 
 %% Template command for imagemagick
 image_command(Width, Height, Format, Path, Type) ->
