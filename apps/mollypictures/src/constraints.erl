@@ -38,13 +38,15 @@ get_format(Format) ->
 match_text(String, {From, To}) ->
   lists:sublist(String, From+1, To).
 
-%% Validate equested dimensions
-valid_dimens(Width, _Height) when Width > ?MAX_WIDTH -> false;
-valid_dimens(_Width, Height) when Height > ?MAX_HEIGHT -> false;
-valid_dimens(_Width, _Height) -> true.
+%% Validate requested dimensions
+valid_dimens(Width, _Height, landscape) when Width > ?MAX_WIDTH -> false;
+valid_dimens(_Width, Height, landscape) when Height > ?MAX_HEIGHT -> false;
+valid_dimens(Width, _Height, portrait) when Width > ?MAX_HEIGHT -> false;
+valid_dimens(_Width, Height, portrait) when Height > ?MAX_WIDTH -> false;
+valid_dimens(_Width, _Height, _Orientation) -> true.
 
 output(Width, Height, Format, Orientation) ->
-  case valid_dimens(Width, Height) of
+  case valid_dimens(Width, Height, Orientation) of
     true -> {true, {Width, Height, Format, Orientation}};
     _ -> false
   end.
