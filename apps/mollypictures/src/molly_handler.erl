@@ -8,8 +8,8 @@
 
 -record(state, {}).
 
--define(MAX_WIDTH_MEDUIM, 960).
--define(MAX_HEIGHT_MEDUIM, 540).
+-define(MAX_WIDTH_MEDIUM, 960).
+-define(MAX_HEIGHT_MEDIUM, 540).
 
 -define(MAX_WIDTH_SMALL, 480).
 -define(MAX_HEIGHT_SMALL, 270).
@@ -51,15 +51,15 @@ type_flag(Type) when Type =:= g ->
 type_flag(_) -> "".
 
 %% Which size source image do we need
-source_folder(Width, Height, portrait) when Width > ?MAX_HEIGHT_MEDUIM -> large;
+source_folder(Width, Height, portrait) when Width > ?MAX_HEIGHT_MEDIUM -> large;
 source_folder(Width, Height, portrait) when Height >= ?MAX_HEIGHT_MEDIUM -> large;
-source_folder(Width, Height, landscape) when Width > ?MAX_WIDTH_MEDUIM -> large;
-source_folder(Width, Height, landscape) when Height >= ?MAX_HEUGHT_MEDIUM -> large;
+source_folder(Width, Height, landscape) when Width > ?MAX_WIDTH_MEDIUM -> large;
+source_folder(Width, Height, landscape) when Height >= ?MAX_HEIGHT_MEDIUM -> large;
 
 source_folder(Width, Height, portrait) when Width > ?MAX_HEIGHT_SMALL -> medium;
 source_folder(Width, Height, portrait) when Height >= ?MAX_HEIGHT_SMALL -> medium;
 source_folder(Width, Height, landscape) when Width > ?MAX_WIDTH_SMALL -> medium;
-source_folder(Width, Height, landscape) when Height >= ?MAX_HEUGHT_SMALL -> medium;
+source_folder(Width, Height, landscape) when Height >= ?MAX_HEIGHT_SMALL -> medium;
 
 source_folder(_Width, _Height ,_Orientation) -> small.
 
@@ -76,7 +76,7 @@ random_picture_path(Orientation, Size) ->
   Index = random:uniform(length(Pictures)),
   File = lists:nth(Index, Pictures),
 
-  filename:join([Basepath, File]);
+  filename:join([Basepath, File]).
 
 %% Template command for imagemagick
 image_command(Width, Height, Format, Path, Type) ->
