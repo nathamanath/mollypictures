@@ -14,12 +14,8 @@ You can see it running here: http://molly.nathansplace.co.uk
 ## Build / run
 
 ```sh
-  $ make docker
-  $ docker run docker run -p 8080:80
+  $ make
 ```
-
-If you set environment variables `LE_EMAIL` and `LE_DOMAIN` it will attempt to
-set up ssl certificates from lets encrypt on launch.
 
 ## Image selection
 

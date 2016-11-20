@@ -6,7 +6,7 @@
 DH_DIR=/etc/ssl/dh
 DH_PARAMS=${DH_DIR}/dh_params.pem
 
-if [ ! -f $DH_PARAMS ] && [ -z "$LE_EMAIL" ] && [ -z "$LE_DOMAIN" ]
+if [ ! -f $DH_PARAMS ] && [ "$LE_EMAIL" ] && [ "$LE_DOMAIN" ]
 then
   mkdir -p $DH_DIR
   openssl dhparam -out $DH_PARAMS 2048

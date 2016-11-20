@@ -2,7 +2,7 @@
 
 # If $LE_EMAIL and $LE_DOMAIN are set, request SSL certificates from lets encrypt
 
-if [ -z "$LE_EMAIL" ] && [ -z "$LE_DOMAIN" ]
+if [ "$LE_EMAIL" ] && [ "$LE_DOMAIN" ]
 then
 
   mkdir -p /data/www
