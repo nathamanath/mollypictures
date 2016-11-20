@@ -5,19 +5,17 @@ so I made a placeholder image site.
 
 * Image manipulation is done with imagemagick,
 * Web server is cowboy,
-* Caching is handled by nginx.
+* Caching is handled by nginx,
+* Docker image requests its own ssl certificate form lets encrypt, and keeps it
+  updated.
 
 You can see it running here: http://molly.nathansplace.co.uk
 
 ## Build / run
 
 ```sh
-  $ rebar3 as prod release
-  $ docker build -t mollypictures .
-  $ docker run -d -p 8080:80 -t mollypictures
+  $ make
 ```
-
-Then visit `http://localhost:8080` for usage.
 
 ## Image selection
 
@@ -34,6 +32,5 @@ For now, images are duplicated to make the following folders
 
 ## TODO:
 
-* ssl via lets encrypt
 * endpoint to add new images
 * resize source images based on actual usage

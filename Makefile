@@ -13,3 +13,4 @@ permissions:
 	# ensure that executables are executable
 	chmod +x config/docker/my_init.d/*
 	chmod -R +x config/docker/runit/*
+	chmod +x config/docker/bin/*
