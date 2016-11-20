@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec /app/rel/mollypictures/bin/mollypictures foreground

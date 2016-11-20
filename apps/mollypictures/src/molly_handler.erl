@@ -9,10 +9,10 @@
 -record(state, {}).
 
 -define(MAX_WIDTH_MEDIUM, 960).
--define(MAX_HEIGHT_MEDIUM, 540).
+-define(MAX_HEIGHT_MEDIUM, 640).
 
 -define(MAX_WIDTH_SMALL, 480).
--define(MAX_HEIGHT_SMALL, 270).
+-define(MAX_HEIGHT_SMALL, 320).
 
 %%====================================================================
 %% API
@@ -76,7 +76,9 @@ random_picture_path(Orientation, Size) ->
   Index = random:uniform(length(Pictures)),
   File = lists:nth(Index, Pictures),
 
-  filename:join([Basepath, File]).
+  Out = filename:join([Basepath, File]),
+  lager:info(Out),
+  Out.
 
 %% Template command for imagemagick
 image_command(Width, Height, Format, Path, Type) ->
