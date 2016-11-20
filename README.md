@@ -5,7 +5,8 @@ so I made a placeholder image site.
 
 * Image manipulation is done with imagemagick,
 * Web server is cowboy,
-* Caching is handled by nginx.
+* Caching is handled by nginx,
+* Lets encrypt is used for ssl certificates.
 
 You can see it running here: http://molly.nathansplace.co.uk
 
@@ -34,6 +35,5 @@ For now, images are duplicated to make the following folders
 
 ## TODO:
 
-* ssl via lets encrypt
 * endpoint to add new images
 * resize source images based on actual usage
