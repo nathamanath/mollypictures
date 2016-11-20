@@ -5,6 +5,8 @@
 # every day
 
 certbot renew -q \
+  --standalone \
+  --preferred-challenges http-01 \
   --pre-hook "sv stop nginx" \
   --post-hook "sv start nginx"
 

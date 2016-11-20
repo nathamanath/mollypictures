@@ -2,6 +2,7 @@ upstream app {
   server 0.0.0.0:8080;
 }
 
+# Reverse proxy to app server
 server {
 
   listen 9000;
@@ -22,7 +23,7 @@ server {
 
 }
 
-# Redirect 80 to 443
+# Redirect requests on 80 to 443
 server {
   listen 80;
   return 301 https://$host$request_uri;
@@ -31,6 +32,7 @@ server {
 proxy_cache_path /tmp/nginx levels=1:2 keys_zone=my_zone:10m inactive=30m;
 proxy_cache_key "$scheme$request_method$host$request_uri";
 
+# Proxy cache server and SSL termination
 server {
 
   listen 443 ssl;
@@ -50,6 +52,8 @@ server {
   add_header X-XSS-Protection "1; mode=block";
 
   location / {
+
+    expires 30m;
 
     gzip_static on;
     gzip_vary on;

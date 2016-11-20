@@ -6,19 +6,20 @@ so I made a placeholder image site.
 * Image manipulation is done with imagemagick,
 * Web server is cowboy,
 * Caching is handled by nginx,
-* Lets encrypt is used for ssl certificates.
+* Docker image requests its own ssl certificate form lets encrypt, and keeps it
+  updated.
 
 You can see it running here: http://molly.nathansplace.co.uk
 
 ## Build / run
 
 ```sh
-  $ rebar3 as prod release
-  $ docker build -t mollypictures .
-  $ docker run -d -p 8080:80 -t mollypictures
+  $ make docker
+  $ docker run docker run -p 8080:80
 ```
 
-Then visit `http://localhost:8080` for usage.
+If you set environment variables `LE_EMAIL` and `LE_DOMAIN` it will attempt to
+set up ssl certificates from lets encrypt on launch.
 
 ## Image selection
 

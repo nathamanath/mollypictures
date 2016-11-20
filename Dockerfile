@@ -31,9 +31,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY config/docker/my_init.d /etc/my_init.d
 COPY config/docker/runit /etc/service
 COPY _build/prod /app
-COPY config/docker/bin /app/bin
+COPY config/docker/bin /etc/docker/bin
+COPY config/docker/bin/renew_cert.sh /etc/cron.weekly/renew_cert.sh
 
 EXPOSE 80
 EXPOSE 443
 
-ENTRYPOINT /app/bin/startup.sh
+ENTRYPOINT /etc/docker/bin/startup.sh
