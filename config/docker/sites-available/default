@@ -4,9 +4,6 @@ upstream app {
 
 server {
 
-  access_log /var/log/mollypictures/nginx_access.log;
-  error_log /var/log/mollypictures/nginx_error.log;
-
   listen 9000;
 
   location / {

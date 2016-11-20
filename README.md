@@ -19,20 +19,21 @@ You can see it running here: http://molly.nathansplace.co.uk
 
 Then visit `http://localhost:8080` for usage.
 
-## Image folders
+## Image selection
 
-To speed up image generation, several versions of each image are stored. The
-idea being to reduce the size of source images being loaded into imagemagick.
+Several versions of source images are stored sorted into portrait and landscape
+Source images are selected to look reasonable and to minimise file size.
+
+This improves performance when generating smaller images.
 
 For now, images are duplicated to make the following folders
 
-* large: 1920x1080
-* medium: 960x540
-* small: 480x270
+* large: 1920x1280
+* medium: 960x640
+* small: 480x320
 
-Each contains portrait and landscape folder
+## TODO:
 
-Source images are randomly picked from smallest folder with dimensions greater
-or equal to those requested.
-
-Will run k-means on generated images after a while to find optimal sizes.
+* ssl via lets encrypt
+* endpoint to add new images
+* resize source images based on actual usage
