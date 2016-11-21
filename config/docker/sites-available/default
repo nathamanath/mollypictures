@@ -11,7 +11,7 @@ server {
 
     expires 30m;
 
-    add_header Cache-Control public;
+    #add_header Cache-Control public;
 
     proxy_pass http://app;
     proxy_set_header Host $host;
@@ -30,7 +30,6 @@ server {
 }
 
 proxy_cache_path /tmp/nginx levels=1:2 keys_zone=my_zone:10m inactive=30m;
-proxy_cache_key "$scheme$request_method$host$request_uri";
 
 # Proxy cache server and SSL termination
 server {
@@ -61,11 +60,13 @@ server {
     gzip_comp_level 6;
     gzip_types application/x-javascript text/css text/html image/x-icon image/png image/jpeg image/gif;
 
-    proxy_cache my_zone;
-    add_header X-Proxy-Cache $upstream_cache_status;
-
-    include proxy_params;
     proxy_pass http://0.0.0.0:9000;
+
+    proxy_cache my_zone;
+    proxy_cache_key "$scheme$request_method$host$request_uri";
+    proxy_cache_use_stale error timeout invalid_header updating http_500 http_502 http_503 http_504;
+
+    add_header X-Proxy-Cache $upstream_cache_status;
 
   }
 

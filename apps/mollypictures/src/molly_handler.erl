@@ -29,7 +29,13 @@ init(Req, Opts) ->
   {_, Image} = command_runner:exec(image_command(Width, Height, Format, Path, Type)),
 
   Req2 = cowboy_req:reply(200,
-    #{ <<"content-type">> => mime_type(Format) }, Image, Req),
+    #{
+      <<"content-type">> => mime_type(Format),
+      <<"last-modified">> => cow_date:rfc7231(erlang:localtime())
+    },
+    Image,
+    Req
+  ),
 
   {ok, Req2, #state{}}.
 

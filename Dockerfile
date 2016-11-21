@@ -10,7 +10,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q runit
 # Nginx
 RUN apt-get install -yqq nginx --fix-missing
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-COPY ./config/docker/sites-available/default /etc/nginx/sites-available/default
 
 # App deps
 RUN apt-get install -yqq erlang
@@ -33,6 +32,7 @@ COPY config/docker/runit /etc/service
 COPY _build/prod /app
 COPY config/docker/bin /etc/docker/bin
 COPY config/docker/bin/renew_cert.sh /etc/cron.weekly/renew_cert.sh
+COPY config/docker/sites-available/default /etc/nginx/sites-available/default
 
 EXPOSE 80
 EXPOSE 443
