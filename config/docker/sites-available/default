@@ -52,7 +52,7 @@ server {
 
   location / {
 
-    expires 30m;
+    expires 15m;
 
     gzip_static on;
     gzip_vary on;
