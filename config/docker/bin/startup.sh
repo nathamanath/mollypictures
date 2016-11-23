@@ -6,7 +6,9 @@ MY_INIT_PATH=/etc/my_init.d
 if [ "$(ls -A $MY_INIT_PATH)" ]
 then
 
-  for f in "$MY_INIT_PATH/*"
+  GLOB="$MY_INIT_PATH/*"
+
+  for f in $GLOB
   do
     $f
   done

@@ -21,6 +21,4 @@ then
 
   /etc/docker/bin/copy_certs.sh
 
-else
-  echo "Not requesting ssl certs."
 fi
