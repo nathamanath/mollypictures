@@ -1,40 +1,37 @@
-FROM debian:jessie
-
-RUN apt-get update
-RUN apt-get upgrade -yqq
-
-# Runit
-RUN touch /etc/inittab
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q runit
-
-# Nginx
-RUN apt-get install -yqq nginx --fix-missing
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+FROM debian:jessie-slim
 
 # App deps
-RUN apt-get install -yqq erlang
-RUN apt-get install -yqq imagemagick
+RUN apt-get update && apt-get install -yq \
+  openssl \
+  gnupg2 \
+  wget \
+  imagemagick
 
-# Certbot
-RUN echo "deb http://ftp.debian.org/debian jessie-backports main" >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install certbot -yq -t jessie-backports
+RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+RUN dpkg -i erlang-solutions_1.0_all.deb
+RUN rm erlang-solutions_1.0_all.deb
+RUN apt-get update && apt-get install -yq esl-erlang
 
-# Cron
-RUN apt-get install -y cron
+# Set the locale, otherwise elixir will complain later on
+RUN apt-get purge locales
+RUN apt-get install locales -yq
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # Tidy up
+RUN apt-get purge -yq wget
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN useradd -ms /bin/bash molly
+
 # Move files over
-COPY config/docker/my_init.d /etc/my_init.d
-COPY config/docker/runit /etc/service
-COPY _build/prod /app
-COPY config/docker/bin /etc/docker/bin
-COPY config/docker/bin/renew_cert.sh /etc/cron.weekly/renew_cert.sh
-COPY config/docker/sites-available/default /etc/nginx/sites-available/default
+COPY _build/prod /opt/mollypictures
+RUN chown -R molly /opt/mollypictures
 
-EXPOSE 80
-EXPOSE 443
+USER molly
 
-ENTRYPOINT /etc/docker/bin/startup.sh
+EXPOSE 8080
+
+ENTRYPOINT /opt/mollypictures/rel/mollypictures/bin/mollypictures foreground

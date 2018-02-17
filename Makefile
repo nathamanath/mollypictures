@@ -1,16 +1,20 @@
-IMAGE_NAME=debian/molly
+IMAGE_NAME=nathamanath/mollypictures
+VERSION=$(shell cat ./version.txt)
+ENVIRONMENT=production
+REBAR=${HOME}/.mix/rebar3
+
+release: build docker
 
 run:
-	rebar3 release
+	${REBAR} release
 	./_build/default/rel/mollypictures/bin/mollypictures console
 
-docker: permissions
-	rebar3 as prod release
-	# build docker image
-	docker build -t ${IMAGE_NAME} .
+build:
+	${REBAR} as prod release
 
-permissions:
-	# ensure that executables are executable
-	chmod +x config/docker/my_init.d/*
-	chmod -R +x config/docker/runit/*
-	chmod +x config/docker/bin/*
+docker:
+	docker build -t ${IMAGE_NAME} .
+	docker tag  ${IMAGE_NAME} ${IMAGE_NAME}:latest
+	docker tag  ${IMAGE_NAME} ${IMAGE_NAME}:${VERSION}
+
+PHONY: docker build run
