@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:jessie-slim
 
 # App deps
 RUN apt-get update && apt-get install -yq \
@@ -32,6 +32,6 @@ RUN chown -R molly /opt/mollypictures
 
 USER molly
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT /opt/mollypictures/rel/mollypictures/bin/mollypictures foreground
